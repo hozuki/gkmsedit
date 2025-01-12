@@ -1,0 +1,64 @@
+{
+  "name": "gkmsdata",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Gakuen iDOLM@STER data",
+  "type": "commonjs",
+  "scripts": {
+    "clean_dist_dir": "del-cli ./dist",
+    "clean_typings_dir": "del-cli ./typings",
+    "dev": "npm run lint && npm run gen_parser && npm run compile_dev && npm run compile_test",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "gen_parser": "peggy --output ./src/serialization/parser/GkmsScenarioParser.js ./resources/gkms_scenario.pegjs",
+    "compile_dev": "tsc --project ./tsconfig.json",
+    "compile_test": "tsc --project ./tsconfig.test.json",
+    "pretypings": "npm run clean_typings_dir",
+    "typings": "tsc --project ./tsconfig.json --declaration --declarationDir ./typings --emitDeclarationOnly --noEmitOnError",
+    "posttypings": "npm run copy_manual_typedefs",
+    "copy_manual_typedefs": "ncp ./src/serialization/parser/GkmsScenarioParser.d.ts ./typings/serialization/parser/GkmsScenarioParser.d.ts --stopOnErr",
+    "pretest": "npm run dev",
+    "test": "mocha --ui bdd --recursive ./test/*.test.js",
+    "dist": "npm run clean_dist && npm run gen_parser_dist && npm run compile_dist && npm run typings",
+    "clean_dist": "npm run clean_dist_dir && npm run clean_typings_dir",
+    "gen_parser_dist": "peggy --output ./dist/serialization/parser/GkmsScenarioParser.js --format es ./resources/gkms_scenario.pegjs",
+    "compile_dist": "tsc --project ./tsconfig.dist.json --outDir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hozuki/gkmsedit.git"
+  },
+  "keywords": [
+    "gkms"
+  ],
+  "author": "George Wu <uiharu@buaa.edu.cn>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hozuki/gkmsedit/issues"
+  },
+  "homepage": "https://github.com/hozuki/gkmsedit#readme",
+  "main": "dist/index.js",
+  "typings": "./typings",
+  "dependencies": {
+    "js-logger": "^1.6.1",
+    "jsesc": "^3.0.2",
+    "reflect-metadata": "^0.2.2",
+    "tslib": "^2.6.2"
+  },
+  "directories": {
+    "lib": "./src",
+    "test": "./test"
+  },
+  "devDependencies": {
+    "@types/jsesc": "^3.0.3",
+    "@types/mocha": "^10.0.6",
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
+    "del-cli": "^5.1.0",
+    "eslint": "^8.57.0",
+    "mocha": "^10.4.0",
+    "ncp": "^2.0.0",
+    "peggy": "^4.0.2",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
+  }
+}

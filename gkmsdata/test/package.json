@@ -1,0 +1,8 @@
+{
+  "name": "gkmsdata-test",
+  "private": true,
+  "version": "0.0.0",
+  "devDependencies": {
+    "@types/node": "^20.14.3"
+  }
+}
