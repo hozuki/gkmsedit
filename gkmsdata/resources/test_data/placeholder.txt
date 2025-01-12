@@ -1,0 +1,1 @@
+Place extracted scenario files (usually "adv_xxxxxxx.txt") here.
